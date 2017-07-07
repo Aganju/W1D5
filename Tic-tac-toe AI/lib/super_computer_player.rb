@@ -1,7 +1,19 @@
 require_relative 'tic_tac_toe_node'
-
+require 'byebug'
 class SuperComputerPlayer < ComputerPlayer
   def move(game, mark)
+    # debugger
+    curr_node = TicTacToeNode.new(game.board, mark)
+    pos_moves = curr_node.children
+    pos_moves.each do |child|
+       return child.prev_move_pos if child.winning_node?(mark)
+     end
+
+     pos_moves.each do |child|
+        return child.prev_move_pos unless child.losing_node?(mark)
+      end
+
+      raise "no non-losing moves"
   end
 end
 
